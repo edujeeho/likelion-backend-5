@@ -14,8 +14,9 @@
   <div th:unless="${studentList.isEmpty()}"
        th:each="student: ${studentList}">
     <p>번호: [[${student.id}]]</p>
-    <p>이름: [[${student.name}]]</p>
+    <p>이름: <a th:href="@{/{id} (id=${student.id})}">[[${student.name}]]</a></p>
     <p>이메일: [[${student.email}]]</p>
+    <hr>
   </div>
   <a href="/create-view">Create</a>
 </body>

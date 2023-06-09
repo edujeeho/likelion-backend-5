@@ -30,11 +30,8 @@ public class StudentController {
             @RequestParam("email")
             String email
     ) {
-        System.out.println(name);
-        System.out.println(email);
         StudentDto studentDto
                 = studentService.createStudent(name, email);
-        System.out.println(studentDto.toString());
 //        return "redirect:/create-view";
         return "redirect:/home";
 
@@ -55,7 +52,6 @@ public class StudentController {
             Model model
     ) {
 //        studentService.readStudent(id);
-        System.out.println(id);
         model.addAttribute(
                 "student",
                 studentService.readStudent(id)
