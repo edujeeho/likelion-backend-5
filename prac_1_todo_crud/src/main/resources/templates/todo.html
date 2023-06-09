@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TODO list</title>
+  <style>
+    div > form {
+        display: inline;
+    }
+  </style>
+</head>
+<body>
+<h1>TODO List</h1>
+<form>
+  <label for="todo-desc">새 할일: <input type="text" id="todo-desc">
+  </label>
+  <input type="submit" value="생성">
+</form>
+<hr>
+<div>
+  TODO 내용
+  <form>
+    <input type="submit" value="완료">
+  </form>
+  <form>
+    <input type="submit" value="삭제">
+  </form>
+</div>
+<div>
+  TODO 내용 2 (완료됨)
+  <form>
+    <input type="submit" value="취소">
+  </form>
+  <form>
+    <input type="submit" value="삭제">
+  </form>
+</div>
+</body>
+</html>
