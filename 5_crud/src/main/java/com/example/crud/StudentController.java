@@ -89,4 +89,38 @@ public class StudentController {
         // 상세보기 페이지로 redirect
         return String.format("redirect:/%s", id);
     }
+
+    // TODO
+    // deleteView 메소드 만들기
+    // GetMapping 을 써서...
+    // Long id는 어떻게...
+    // studentDto 를 가지고...
+    // return...
+    @GetMapping("/{id}/delete-view")
+    public String deleteView(
+            @PathVariable("id")
+            Long id,
+            Model model
+    ) {
+        StudentDto studentDto
+                = studentService.readStudent(id);
+        model.addAttribute("student", studentDto);
+        return "delete";
+    }
+
+    @PostMapping("/{id}/delete")
+    public String delete(
+            @PathVariable("id")
+            Long id
+    ) {
+        studentService.deleteStudent(id);
+        // update 때는 데이터가 남아있지만
+        // delete 는 돌아갈 상세보기가 없다
+        // 그래서 홈으로 돌아간다.
+        return "redirect:/home";
+    }
+
 }
+
+
+

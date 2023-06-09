@@ -51,7 +51,26 @@ public class StudentService {
             targetDto.setEmail(email);
             return targetDto;
         } else return null;
+    }
 
+    public boolean deleteStudent(Long id) {
+        int target = -1;
+        // 학생 리스트를 살펴보며
+        for (int i = 0; i < studentList.size(); i++) {
+            // 대상을 선정한다.
+            if (studentList.get(i).getId().equals(id)) {
+                target = i;
+                break;
+            }
+        }
+
+        // 검색 성공시
+        if (target != -1){
+            // 삭제
+            studentList.remove(target);
+            return true;
+        }
+        else return false;
     }
 }
 
