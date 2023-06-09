@@ -58,4 +58,35 @@ public class StudentController {
         );
         return "read";
     }
+
+    // TODO url 설정 / ("/{id}/edit") 또는 ("/{id}/update-view") / @GetMapping
+    @GetMapping("/{id}/update-view")
+    public String updateView(
+            // TODO 아이디와 Model 받아오기 / Long id, Model model
+            @PathVariable("id") Long id,
+            Model model
+    ){
+        // TODO Model에 student 데이터 부여 / studentService.readStudent
+        model.addAttribute(
+                "student",
+                studentService.readStudent(id)
+        );
+
+        // TODO update.html 돌려주기 / "update"
+        return "update";
+    }
+
+    @PostMapping("/{id}/update")
+    public String update(
+            // TODO StudentController.readOne()를 참조
+            @PathVariable("id") Long id,
+            // TODO StudentController.create()를 참조
+            @RequestParam("name") String name,
+            @RequestParam("email") String email
+    ) {
+        // service 활용하기
+        studentService.updateStudent(id, name, email);
+        // 상세보기 페이지로 redirect
+        return String.format("redirect:/%s", id);
+    }
 }

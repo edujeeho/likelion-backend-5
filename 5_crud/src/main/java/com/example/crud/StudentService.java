@@ -12,6 +12,12 @@ public class StudentService {
     private final List<StudentDto> studentList = new ArrayList<>();
     private Long nextId = 1L;
 
+    public StudentService(){
+        createStudent("alex", "alex@gmail.com");
+        createStudent("brad", "brad@gmail.com");
+        createStudent("chad", "chad@gmail.com");
+    }
+
     // 새로운 StudentDto 를 생성하는 메소드
     public StudentDto createStudent(String name, String email) {
         StudentDto newStudent = new StudentDto(
@@ -26,8 +32,7 @@ public class StudentService {
         return studentList;
     }
 
-    // Service에서 단일 StudentDto를 주는 메소드를 만들겁니다
-    // 이때 이 메소드가 받을 인자는 무엇일까요?
+    // 단일 StudentDto를 주는 메소드
     public StudentDto readStudent(Long id) {
         for (StudentDto studentDto: studentList) {
             if (studentDto.getId().equals(id))
@@ -35,13 +40,32 @@ public class StudentService {
         }
 
         return null;
-
-//        return studentList
-//                .stream()
-//                .filter(studentDto -> studentDto.getId().equals(id))
-//                .findFirst()
-//                .orElse(null);
     }
 
+    // 어떤 학생 데이터를 갱신할 것인지
+    // 그 학생의 갱신될 데이터
+    public StudentDto updateStudent(Long id, String name, String email){
+        StudentDto targetDto = this.readStudent(id);
+        if (targetDto != null) {
+            targetDto.setName(name);
+            targetDto.setEmail(email);
+            return targetDto;
+        } else return null;
 
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
