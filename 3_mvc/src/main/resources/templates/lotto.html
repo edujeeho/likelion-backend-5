@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <!-- 로또 번호를 표시할 구역 -->
+  <div>
+    <span th:each="num: ${winningNums}">[[${num}]] - </span>
+  </div>
+  <a href="/hits">Back</a>
+<!--  <div>-->
+<!--    <span th:each="num: ${winningNumStrs}">[[${num}]]</span>-->
+<!--  </div>-->
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student List</title>
+</head>
+<body>
+  <h1>Student List</h1>
+  <!-- 등록된 학생이 없을 때 -->
+  <div th:if="${studentList.isEmpty()}">
+    <p>No Student Here...</p>
+  </div>
+  <!--  등록된 학생이 있을 때  -->
+  <div th:unless="${studentList.isEmpty()}"
+       th:each="student: ${studentList}">
+    <p>번호: [[${student.id}]]</p>
+    <p>이름: [[${student.name}]]</p>
+    <p>이메일: [[${student.email}]]</p>
+  </div>
+  <a href="/create-view">Create</a>
+</body>
+</html>
