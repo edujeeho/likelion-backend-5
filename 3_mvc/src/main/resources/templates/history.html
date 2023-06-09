@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lotto History</title>
+</head>
+<body>
+<div th:if="${history.isEmpty()}">
+  당첨 이력이 없습니다
+</div>
+<div th:unless="${history.isEmpty()}" th:each="winningNums: ${history}">
+  <span th:each="num, iterStat: ${winningNums}">[[${num}]] - </span>
+</div>
+<a href="/hits">돌아가기</a>
+</body>
+</html>

@@ -15,7 +15,6 @@ import java.util.random.RandomGenerator;
 @Controller
 public class MvcController {
     private final LottoService lottoService;
-//    private int hitCount = 0;
 
     public MvcController(LottoService lottoService) {
         this.lottoService = lottoService;
@@ -30,32 +29,21 @@ public class MvcController {
 
     @RequestMapping("/lotto")
     public String lotto(Model model) {
-//        // 6개의 임의의 숫자 만들기
-//        List<Integer> winningNums = new ArrayList<>();
-//        RandomGenerator random = new Random();
-//        for (int i = 0; i < 6; i++) {
-//            // 임의 정수를 반환하는 메소드
-//            winningNums.add(random.nextInt(1, 46));
-//        }
-//
-////        List<String> winningNumStrs = new ArrayList<>();
-////        for (int i = 0; i < 6; i++) {
-////            if (i == 5) {
-////                winningNumStrs.add(winningNums.get(i).toString());
-////            } else {
-////                winningNumStrs.add(String.format("%d - ", winningNums.get(i)));
-////            }
-////        }
+
         List<Integer> winningNums = lottoService.nextWinningNumber();
 
         model.addAttribute("winningNums", winningNums);
-//        model.addAttribute("winningNumStrs", winningNumStrs);
 
         return "lotto";
     }
 
-    // history 매핑 추가
+    @RequestMapping("/history")
+    public String history(Model model) {
+        List<List<Integer>> history = lottoService.getHistory();
 
+        model.addAttribute("history",  history);
+        return "history";
+    }
 
     @RequestMapping("/")
     public String home(Model model) {

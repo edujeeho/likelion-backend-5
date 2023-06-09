@@ -26,7 +26,7 @@ public class LottoService {
         List<Integer> winningNums = new ArrayList<>();
         RandomGenerator random = new Random();
         for (int i = 0; i < 6; i++) {
-            winningNums.add(random.nextInt(1, 6));
+            winningNums.add(random.nextInt(1, 46));
         }
 
         history.add(winningNums);
@@ -35,4 +35,8 @@ public class LottoService {
     }
 
     // history 메소드 추가
+    public List<List<Integer>> getHistory() {
+        return this.history;
+    }
+
 }
