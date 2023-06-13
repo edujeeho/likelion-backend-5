@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatis.mapper.StudentXmlMapper">
+    <insert id="insertStudent" parameterType="Student">
+        INSERT INTO students(name, age, phone, email)
+        VALUES (#{name}, #{age}, #{phone}, #{email})
+    </insert>
+    <insert
+            id="insertStudentKeys"
+            parameterType="Student"
+            useGeneratedKeys="true"
+            keyProperty="id"
+    >
+        INSERT INTO students(name, age, phone, email)
+        VALUES (#{name}, #{age}, #{phone}, #{email})
+    </insert>
+    <select id="selectStudentAll" resultType="Student">
+        SELECT * FROM students;
+    </select>
+    <select id="selectStudent" parameterType="Long" resultType="Student">
+        SELECT * FROM students WHERE id = #{id}
+    </select>
+    <select id="selectStudentOptional" parameterType="Long" resultType="Student">
+        SELECT * FROM students WHERE id = #{id}
+    </select>
+    <update id="updateStudent" parameterType="Student">
+        UPDATE students
+        SET name = #{name},
+            age = #{age},
+            phone = #{phone},
+            email = #{email}
+        WHERE id = #{id}
+    </update>
+    <delete id="deleteStudent" parameterType="Long">
+        DELETE FROM students
+        WHERE id = #{id}
+    </delete>
+    <!--  dynamic sql  -->
+    <select id="findByFields" parameterType="Student">
+        SELECT * FROM students
+        WHERE name = #{name}
+        <if test="age != null">
+            AND age = #{age}
+        </if>
+    </select>
+    <insert id="insertStudentBatch" parameterType="Student">
+        INSERT INTO students(name, age, phone, email)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.name}, #{item.age}, #{item.phone}, #{item.email})
+        </foreach>
+    </insert>
+</mapper>

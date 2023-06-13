@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:db.sqlite
+    driver-class-name: org.sqlite.JDBC
+#    username: sa
+#    password: password
+
+mybatis:
+  mapper-locations: "classpath:mybatis/mappers/*.xml"
+  type-aliases-package: "com.example.mybatis.model"
+  configuration:
+    map-underscore-to-camel-case: true
