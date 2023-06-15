@@ -1,0 +1,22 @@
+INSERT INTO students (name,age,phone,email)
+VALUES
+    ('Bruce Moreno',28,'010-9485-3464','lacus.etiam@kakao.com'),
+    ('Germane Mcgowan',56,'011-2109-8142','dignissim.tempor@naver.com'),
+    ('Herman Hendricks',50,'016-6421-6726','id.ante.nunc@naver.com'),
+    ('Willow Dunlap',36,'019-9835-7348','sed@gmail.com'),
+    ('Ora Harris',58,'010-9010-7201','adipiscing@kakao.com'),
+    ('Honorato Rojas',30,'011-3529-4900','suspendisse.eleifend@kakao.com'),
+    ('Liberty Peterson',51,'011-8546-0897','sociosqu.ad@gmail.com'),
+    ('Jade Miranda',41,'019-4845-3835','urna@gmail.com'),
+    ('Keaton Dawson',41,'010-2848-2883','ligula.nullam@gmail.com'),
+    ('Dominic Carter',27,'011-7315-2192','ornare.in@naver.com'),
+    ('Kimberley Odom',61,'011-5583-8814','consequat.auctor.nunc@gmail.com'),
+    ('Colt Tanner',34,'019-2738-7435','mauris.quis@kakao.com'),
+    ('Lareina Patel',56,'016-6765-4999','nisl.arcu@naver.com'),
+    ('Blake Flores',52,'019-4212-6658','nibh.quisque.nonummy@kakao.com'),
+    ('Wesley Houston',45,'019-4806-3432','aliquam@naver.com'),
+    ('John Collier',43,'010-3265-4256','lobortis.class@naver.com'),
+    ('Blossom Thomas',51,'011-9423-4968','eu@gmail.com'),
+    ('Abdul Nolan',46,'019-6318-7728','vitae.orci.phasellus@naver.com'),
+    ('Camden Lott',21,'010-8214-7751','vivamus.molestie@kakao.com'),
+    ('Conan Knowles',40,'019-7767-7142','nonummy@gmail.com');;
