@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Update</title>
+</head>
+<body>
+  <h1>Update Student</h1>
+  <form th:action="@{/students/{id}/update (id=${student.id})}" method="post">
+    <label for="name-input">
+      Name: <input id="name-input" name="name" th:value="${student.name}">
+    </label>
+    <br>
+    <label for="age-input">Age: <input id="age-input" name="age" th:value="${student.age}"></label>
+    <br>
+    <label for="phone-input">Phone: <input id="phone-input" name="phone" th:value="${student.phone}"></label>
+    <br>
+    <label for="email-input">
+      Email: <input id="email-input" name="email" th:value="${student.email}">
+    </label>
+    <br>
+    <input type="submit">
+  </form>
+  <a th:href="@{/students/{id} (id=${student.id})}">Back</a>
+</body>
+</html>

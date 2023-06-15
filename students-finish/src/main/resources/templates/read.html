@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Details</title>
+</head>
+<body>
+  <h1>[[${student.id}]]. [[${student.name}]]</h1>
+  <p>나이: [[${student.age}]]</p>
+  <p>전화번호: [[${student.phone}]]</p>
+  <p>이메일: [[${student.email}]]</p>
+  <a href="/students">Back</a>
+  <a th:href="@{/students/{id}/update-view (id=${student.id})}">Update</a>
+  <a th:href="@{/students/{id}/delete-view (id=${student.id})}">Delete</a>
+</body>
+</html>
