@@ -4,17 +4,21 @@ package com.example.jpa.entities;
 *   name TEXT,
 *   age INTEGER,
 *   phone TEXT,
-*   email TEXT
+*   email TEXT,
+*   created_at timestamp default (datetime('now'))
 * */
 
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.Instant;
+
 @Data
 @Entity  // 데이터베이스 테이블의 레코드임을 나타냄
 // 테이블에 지정하고 싶은 설정 (이름이라던지)
 @Table(name = "students")
-public class StudentEntity {  // student_entity
+public class StudentEntity
+        extends BaseEntity {  // student_entity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
