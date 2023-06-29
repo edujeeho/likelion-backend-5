@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
@@ -21,6 +22,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 public class UserServiceTests {
     @Mock
     private UserRepository userRepository;
@@ -28,28 +30,23 @@ public class UserServiceTests {
     @InjectMocks
     private UserService userService;
 
-    // UserDto(id==null)를 입력받아 UserDto(id!=null)를 반환
     @Test
-    @DisplayName("UserDto로 createUser")
+    @DisplayName("UserDto로 UserEntity 생성")
     public void testCreateUser() {
         // given
-        // 1. UserRepository 가 전달받을 UserEntity 정의
+        // 생성 할 UserEntity
         String username = "jeeho.dev";
         UserEntity userEntityIn = new UserEntity();
         userEntityIn.setUsername(username);
 
-        // 2. UserRepository 가 반환할 UserEntity 정의
+        // 생성 될 UserEntity
         Long userId = 1L;
         UserEntity userEntityOut = new UserEntity();
         userEntityOut.setId(userId);
         userEntityOut.setUsername(username);
-
-        // 3. UserRepository의 기능을 따라하도록 설정
-        // userRepository는 아래와 같이 기능할것이다 라고 가정
+        // Mock 객체(가짜 객체)의 행동 정의
         when(userRepository.save(userEntityIn))
                 .thenReturn(userEntityOut);
-        when(userRepository.existsByUsername(username))
-                .thenReturn(false);
 
         // when
         UserDto userDto = new UserDto();

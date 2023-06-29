@@ -5,72 +5,89 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
+
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
+@ActiveProfiles("test")
 public class UserRepositoryTests {
     @Autowired
     private UserRepository userRepository;
 
     @Test
-    @DisplayName("새 UserEntity 를 데이터베이스에 추가 성공")
+    @DisplayName("새 user 생성")
     public void testSaveNew() {
-        // given: 테스트가 진행되기 위한 전제 조건을 준비하는 구간
-        // 새로운 UserEntity 준비
+        // given
         String username = "jeeho.dev";
         UserEntity user = new UserEntity();
         user.setUsername(username);
 
-        // when: 테스트 하고싶은 실제 기능을 작성하는 구간
+        // when
         user = userRepository.save(user);
 
-        // then: 실행한 결과가 기대한 것과 같은지를 검증하는 구간
-        // 1. 새로 반환받은 user의 id는 null이 아님
+        // then
         assertNotNull(user.getId());
-        // 2. 새로 반환받은 user의 username은 우리가 넣었던 username과 동일
         assertEquals(username, user.getUsername());
     }
 
     @Test
-    @DisplayName("새 UserEntity 를 데이터베이스에 추가 실패")
+    @DisplayName("새 user 생성 실패")
     public void testSaveNewFail() {
-        // given: username을 가지고 UserEntity를 먼저 save
+        // given
         String username = "jeeho.dev";
         UserEntity userGiven = new UserEntity();
         userGiven.setUsername(username);
-        userRepository.save(userGiven);
+        userGiven = userRepository.save(userGiven);
 
-        // when: 같은 username을 가진 새 UserEntity save 시도
+        // when
         UserEntity user = new UserEntity();
         user.setUsername(username);
 
-        // when-then: 예외 발생
+        // when-then
         assertThrows(Exception.class, () -> userRepository.save(user));
     }
 
     @Test
-    @DisplayName("username으로 UserEntity 찾기")
-    public void testFindByUsername() {
-        // given: 검색할 UserEntity 미리 생성
+    @DisplayName("username으로 user 찾기")
+    public void testFindByUsernameSuccess() {
+        // given
         String username = "jeeho.dev";
         UserEntity userGiven = new UserEntity();
         userGiven.setUsername(username);
+
         userRepository.save(userGiven);
 
-        // when: userRepository.findByUsername()
-        Optional<UserEntity> optionalUser
-                = userRepository.findByUsername(username);
+        // when
+        Optional<UserEntity> user = userRepository.findByUsername(username);
 
-        // then: Optional.isPresent(), username == username
-        assertTrue(optionalUser.isPresent());
-        assertEquals(username, optionalUser.get().getUsername());
+        // then
+        assertTrue(user.isPresent());
+        assertEquals(user.get().getUsername(), username);
     }
 
     @Test
-    @DisplayName("username으로 찾기 실패")
+    @DisplayName("username으로 user 찾기 실패")
+    public void testFindByUsernameFail() {
+        // given
+        String username = "jeeho.dev";
+        UserEntity userGiven = new UserEntity();
+        userGiven.setUsername(username);
+
+        userRepository.save(userGiven);
+
+        // when
+        Optional<UserEntity> user = userRepository.findByUsername("not_found");
+
+        // then
+        assertTrue(user.isEmpty());
+    }
+
+    @Test
+    @DisplayName("username으로 user 존재 유무 판단")
     public void testExistsByUsername() {
         // given
         String usernameExists = "jeeho.dev";
@@ -89,7 +106,7 @@ public class UserRepositoryTests {
     }
 
     @Test
-    @DisplayName("id로 UserEntity 삭제")
+    @DisplayName("id로 user 삭제")
     public void testDeleteById() {
         // given
         String username = "target";

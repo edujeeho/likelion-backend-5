@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:db.sqlite
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+
+logging:
+  config: file:logback-spring.xml
+  level:
+    root: warn
+    com.example.contents: warn
