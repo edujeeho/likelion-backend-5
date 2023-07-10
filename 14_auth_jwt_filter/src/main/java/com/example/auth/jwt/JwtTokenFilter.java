@@ -72,7 +72,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 log.warn("jwt validation failed");
             }
         }
-//        filterChain.doFilter(request, response);
+        filterChain.doFilter(request, response);
     }
 }
 
