@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:db.sqlite
+    driver-class-name: org.sqlite.JDBC
+    username: sa
+    password: password
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    show-sql: true
+
+jwt:
+  secret: aaaabbbsdifqbvaesoioegwaaaabbbsdifqbvaesoioegwaaaabbbsdifqbvaes
+
+server:
+  port: 8081
+#  secret: YU9ranJVcUxyMlBMR2dhN1ZrQjM0bm0xc20wZHB6a1lPWkVJWlpNeW1iMTQvWDFqbm0vQUhsd09veUw5VTBMbW5LeDYzS0tLbTU3UCtPUTBMdE1mL3c9PQo=
