@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebSocket Chatting</title>
+
+</head>
+<body onload="">
+<div>
+  <div>
+    <label for="nickname">이름: </label><input type="text" id="nickname" placeholder="Choose a nickname"/>
+    <button id="connect" onclick="loadRooms()">방 찾기</button>
+    <br><br>
+    <input type="text" id="room-name" placeholder="Create Room">
+    <button id="create" onclick="createRoom()">생성</button>
+  </div>
+  <div id="room-list">
+  </div>
+</div>
+<script type="text/javascript">
+
+  async function loadRooms(){
+    const nickname = document.getElementById("nickname").value ?? 'anonymous';
+    const chatRooms = await (await fetch("/chat/rooms")).json();
+    const roomDiv = document.getElementById("room-list");
+    roomDiv.innerText = ""
+    chatRooms.forEach((chatRoom) => {
+      console.log(chatRoom)
+      const newRoom = document.createElement("div")
+      newRoom.innerHTML = `<a href="/chat/${chatRoom.id}/${nickname}">${chatRoom.roomName}</a>`;
+      roomDiv.appendChild(newRoom)
+    });
+  }
+
+  async function createRoom() {
+    const nickname = document.getElementById("nickname").value;
+    const roomName = document.getElementById("room-name").value;
+    const response = await (await fetch(`/chat/rooms`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        roomName
+      })
+    })).json();
+    const roomId = response.id;
+    window.location.href = `/chat/${roomId}/${nickname}`;
+  }
+</script>
+</body>
+</html>
