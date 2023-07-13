@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <title>네이버 지도 써보기</title>
+  <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=CLIENT_ID_HERE"></script>
+</head>
+<body>
+<div id="map" style="width:50%;height:400px;"></div>
+<button id="center-me" type="button">나를 중심으로 이동</button>
+<button id="find-route" type="button">경로 구하기</button>
+<button id="find-address" type="button">중심점 주소</button>
+<script>
+  let position = new naver.maps.LatLng(37.3595704, 127.105399)
+  let mapOptions = {
+    center: position,
+    zoom: 15,
+    zoomControl: true, //줌 컨트롤의 표시 여부
+    zoomControlOptions: { //줌 컨트롤의 옵션
+      position: naver.maps.Position.TOP_RIGHT
+    }
+  };
+
+  let map = new naver.maps.Map('map', mapOptions);
+
+  let markers = [];
+  naver.maps.Event.addListener(map, 'click', function(e) {
+    // marker.setPosition(e.coord);
+    if (markers.length === 2) {
+      markers.forEach(marker => {
+        marker.setMap(null)
+      })
+      markers.length = 0
+    }
+
+    else {
+      markers.push(new naver.maps.Marker({
+        position: e.coord,
+        map: map
+      }))
+    }
+  });
+
+
+  document.getElementById("center-me").addEventListener("click", () => {
+    getLocation()
+  })
+
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(centerMap);
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
+  function centerMap(position) {
+    const naverPoint = new naver.maps.LatLng(position.coords.latitude, position.coords.longitude)
+    map.setCenter(naverPoint);
+  }
+
+  let polyline = null;
+  document.getElementById("find-route").addEventListener("click", () => {
+    if (markers.length != 2) {
+      alert("두 지점을 선택하세요")
+    } else {
+      if (polyline !== null) polyline.setMap(null)
+
+      const from = markers[0].getPosition()
+      const to = markers[1].getPosition()
+      fetch("/api/direction", {
+        method: "post",
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({
+          start: {
+            lat: from.lat(),
+            lng: from.lng()
+          },
+          goal: {
+            lat: to.lat(),
+            lng: to.lng()
+          }
+        })
+      }).then(response => {
+        console.log(response)
+        if (response.ok) response.json()
+          .then(body => {
+            console.log(body.path)
+            const path = []
+            body.path.forEach(point => {
+              path.push(new naver.maps.LatLng(point.lat, point.lng))
+            })
+
+            polyline = new naver.maps.Polyline({
+              map: map,
+              path: path
+            })
+            alert(`${from} -> ${to}`)
+          })
+      })
+
+    }
+  })
+
+  document.getElementById("find-address").addEventListener("click", () => {
+    const lat = map.getCenter().lat();
+    const lng = map.getCenter().lng();
+    fetch("/api/geocoding", {
+      method: "post",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        lat, lng
+      })
+    }).then(response => {
+      if (response.ok) response.json()
+        .then(body => {
+          alert(body.address)
+        })
+    })
+  })
+</script>
+</body>
+</html>
