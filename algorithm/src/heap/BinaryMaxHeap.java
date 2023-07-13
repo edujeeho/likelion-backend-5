@@ -1,7 +1,6 @@
 package heap;
 
-import java.util.Collections;
-import java.util.PriorityQueue;
+import java.util.Arrays;
 
 public class BinaryMaxHeap {
     private int[] heap;
@@ -10,6 +9,23 @@ public class BinaryMaxHeap {
     public BinaryMaxHeap() {
         heap = new int[32];
         size = 0;
+    }
+
+    // arr는 힙이 아니라고 가정
+    public BinaryMaxHeap(int[] arr) {
+        // 주어진 arr를 일단 heap에 저장
+        heap = Arrays.copyOf(arr, arr.length);
+        size = heap.length;
+        // 마지막 자식이 존재하는 노드
+        int lastIndex = size - 1;
+        // 마지막 자식의 부모
+        int lastParentIndex = (lastIndex - 1) / 2;
+        // 자식이 존재하는 노드 중에서 가장 나중에 존재하는 노드부터
+        // (마지막 자식의 부모 노드)
+        // siftDown을 해주면 된다.
+        for (int i = lastParentIndex; i >= 0; i--) {
+            siftDown(i);
+        }
     }
 
     // 삽입 연산
@@ -79,36 +95,49 @@ public class BinaryMaxHeap {
         }
     }
 
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
     public static void main(String[] args) {
-        BinaryMaxHeap maxHeap = new BinaryMaxHeap();
-        for (int i = 0; i < 32; i++) {
-            maxHeap.insert(i);
-        }
-        for (int i = 0; i < 32; i++) {
+        BinaryMaxHeap maxHeap = new BinaryMaxHeap(
+                new int[]{1, 21, 14, 6, 10, 2, 5, 6, 8}
+        );
+        while (!maxHeap.isEmpty()) {
             System.out.println(maxHeap.remove());
         }
 
-        int[] arr = new int[]{3, 4, 0, 5, 1, 2, 8, 6, 9};
+//        BinaryMaxHeap maxHeap = new BinaryMaxHeap();
+//        for (int i = 0; i < 32; i++) {
+//            maxHeap.insert(i);
+//        }
+//        for (int i = 0; i < 32; i++) {
+//            System.out.println(maxHeap.remove());
+//        }
+//
+//        int[] arr = new int[]{3, 4, 0, 5, 1, 2, 8, 6, 9};
+//
+//        System.out.println("priority queue");
+//        // min heap을 사용하는것과 비슷한 PriorityQueue
+//        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
+//        for (int i = 0; i < arr.length; i++) {
+//            priorityQueue.offer(arr[i]);
+//        }
+//        while (!priorityQueue.isEmpty()) {
+//            System.out.println(priorityQueue.poll());
+//        }
+//
+//        System.out.println("priority queue reverse");
+//        // max heap은 Collections.reverseOrder()를 사용할 수 있다.
+//        PriorityQueue<Integer> priorityQueueMax = new PriorityQueue<>(Collections.reverseOrder());
+//        for (int i = 0; i < arr.length; i++) {
+//            priorityQueueMax.offer(arr[i]);
+//        }
+//        while (!priorityQueueMax.isEmpty()) {
+//            System.out.println(priorityQueueMax.poll());
+//        }
 
-        System.out.println("priority queue");
-        // min heap을 사용하는것과 비슷한 PriorityQueue
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
-        for (int i = 0; i < arr.length; i++) {
-            priorityQueue.offer(arr[i]);
-        }
-        while (!priorityQueue.isEmpty()) {
-            System.out.println(priorityQueue.poll());
-        }
 
-        System.out.println("priority queue reverse");
-        // max heap은 Collections.reverseOrder()를 사용할 수 있다.
-        PriorityQueue<Integer> priorityQueueMax = new PriorityQueue<>(Collections.reverseOrder());
-        for (int i = 0; i < arr.length; i++) {
-            priorityQueueMax.offer(arr[i]);
-        }
-        while (!priorityQueueMax.isEmpty()) {
-            System.out.println(priorityQueueMax.poll());
-        }
     }
 }
 
