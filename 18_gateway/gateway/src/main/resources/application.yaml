@@ -1,0 +1,24 @@
+# application.yaml로 경로 설정하기
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: auth
+#          predicates:
+#            - Path=/auth/**
+#          filters:
+#            - name: RewritePath
+#              args:
+#                regexp: /(?<path>.*)
+#                replacement: /$\{path}
+#            - name: LogExecution
+#              args:
+#                simpleUid: true
+#                inSeconds: true
+#          uri: http://localhost:8081
+#        - id: articles
+#          uri: http://localhost:8082
+#          predicates:
+#            - Path=/articles/**
+#          filters:
+#            - LogExecution=true, true
