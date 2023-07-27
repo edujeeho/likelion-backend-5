@@ -18,11 +18,11 @@ public class AuthController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void roleAdmin() {}
 
-    @GetMapping("priv-read")
+    @GetMapping("authority-read")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void privilegeRead() {}
+    public void authorityilegeRead() {}
 
-    @GetMapping("priv-write")
+    @GetMapping("authority-write")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void privilegeWrite() {}
+    public void authorityilegeWrite() {}
 }

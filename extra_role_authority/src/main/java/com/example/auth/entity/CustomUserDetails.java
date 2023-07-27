@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Builder
 @NoArgsConstructor
@@ -67,7 +66,7 @@ public class CustomUserDetails implements UserDetails {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role role: entity.getRoles()) {
             authorities.add(new SimpleGrantedAuthority(String.format("ROLE_%s", role.getName())));
-            authorities.addAll(role.getPrivileges()
+            authorities.addAll(role.getAuthorities()
                     .stream()
                     .map(p -> new SimpleGrantedAuthority(p.getName()))
                     .toList());

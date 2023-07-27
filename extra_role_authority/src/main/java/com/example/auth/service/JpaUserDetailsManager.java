@@ -23,38 +23,42 @@ public class JpaUserDetailsManager implements UserDetailsManager {
             UserRepository userRepository,
             PasswordEncoder passwordEncoder,
             RoleRepository roleRepository,
-            PrivilegeRepository privilegeRepository
+            AuthorityRepository authorityRepository
     ) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
 
-        Privilege readPrivilege = new Privilege();
-        readPrivilege.setName("READ");
-        readPrivilege = privilegeRepository.save(readPrivilege);
+        // READ 권한 생성
+        Authority readAuthority = new Authority();
+        readAuthority.setName("READ");
+        readAuthority = authorityRepository.save(readAuthority);
 
-        Privilege writePrivilege = new Privilege();
-        writePrivilege.setName("WRITE");
-        writePrivilege = privilegeRepository.save(writePrivilege);
+        // WRITE 권한 생성
+        Authority writeAuthority = new Authority();
+        writeAuthority.setName("WRITE");
+        writeAuthority = authorityRepository.save(writeAuthority);
 
+        // USER 역할 생성 (READ)
         Role userRole = new Role();
         userRole.setName("USER");
-        userRole.getPrivileges().add(readPrivilege);
-
+        userRole.getAuthorities().add(readAuthority);
         userRole = roleRepository.save(userRole);
 
+        // ADMIN 역할 생성 (READ, WRITE)
         Role adminRole = new Role();
         adminRole.setName("ADMIN");
-        adminRole.getPrivileges().add(readPrivilege);
-        adminRole.getPrivileges().add(writePrivilege);
-
+        adminRole.getAuthorities().add(readAuthority);
+        adminRole.getAuthorities().add(writeAuthority);
         adminRole = roleRepository.save(adminRole);
 
+        // USER 역할 사용자 생성
         UserEntity user = new UserEntity();
         user.setUsername("user");
         user.setPassword(passwordEncoder.encode("asdf"));
         user.getRoles().add(userRole);
         userRepository.save(user);
 
+        // ADMIN 역할 사용자 생성
         UserEntity admin = new UserEntity();
         admin.setUsername("admin");
         admin.setPassword(passwordEncoder.encode("asdf"));

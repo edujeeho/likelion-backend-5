@@ -17,7 +17,7 @@ public class Role {
     private List<UserEntity> users;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "role_privilege")
-    private List<Privilege> privileges = new ArrayList<>();
+    @JoinTable(name = "role_authorities")
+    private List<Authority> authorities = new ArrayList<>();
 
 }

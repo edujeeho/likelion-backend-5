@@ -54,13 +54,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 String username = jwtTokenUtils
                         .parseClaims(token)
                         .getSubject();
-                UserDetails userDetails = userDetailsManager.loadUserByUsername(username);
-                // 사용자 인증 정보 생성
+                UserDetails userDetails =
+                        userDetailsManager.loadUserByUsername(username);
+
                 AbstractAuthenticationToken authenticationToken
                         = new UsernamePasswordAuthenticationToken(
                         userDetails,
-                        token, userDetails.getAuthorities()
+                        token,
+                        userDetails.getAuthorities()
                 );
+
                 // SecurityContext에 사용자 정보 설정
                 context.setAuthentication(authenticationToken);
                 // SecurityContextHolder에 SecurityContext 설정
